@@ -1,0 +1,162 @@
+/* Create database statement is to create a new database
+=======================Statement=================================
+create database databasename;
+================================================================== */
+Create database QAStudent8am;
+
+create database temporarydatabase;
+
+/* to show all the database that has been created*/
+show databases;
+
+/* drop database statement is to delete permanently or remove the database completely
+===================Statement=====================
+Drop database databasename;
+=================================================
+*/
+drop database temporarydatabase;
+
+/* to use the database for reading writing tables 
+=====================Statement===================
+USE databasename
+=================================================
+*/
+use qastudent8am;
+
+/* Create table statement actually creates a new table in the database that has been selected
+=======================Statement========================
+    create table tablename (
+    columnname1 datatype,
+    columnname2 datatype,
+    columnnamen datatype
+    );--This is used when we have used database
+=========================================================
+
+*/
+CREATE TABLE Students (
+    StudentID INT,
+    LastName VARCHAR(255),
+    FirstName VARCHAR(255),
+    Address VARCHAR(255),
+    City VARCHAR(255)
+);
+/*
+Next way of creating table without selecting database or without using use statement
+=====================Statement======================
+ create table databasename.tablename (
+    columnname1 datatype,
+    columnname2 datatype,
+    columnnamen datattype
+    ); -- This is used when we haven't used database
+======================================================
+
+*/
+CREATE TABLE temporarydatabase.Student (
+    StudentID int,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+);
+
+CREATE TABLE temporarydatabase.temproraytable (
+    StudentID int,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+);
+
+CREATE TABLE temproraytable (
+    StudentID int,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+);
+/* To see whether table is there in database or not
+===================Statement==========================
+show tables; --This is used when we have used database
+=====================================================================
+*/
+SHOW tables;
+
+use temporarydatabase;
+
+
+/*DROP TABLE statement is used to drop an existing table in a database
+=====================Statement===========================
+drop table tablename --database in use
+=========================================================
+==================Statement==============================
+drop table databasename.tablename -- database not in use
+=========================================================	
+*/
+Drop table temproraytable;
+
+drop table temporarydatabase.student;
+
+insert into temporarydatabase.temproraytable
+values
+(1,'Lama','Shristi','Pepsicola','Kathmandu');
+
+select * from temporarydatabase.temproraytable;
+
+/* TRUNCATE TABLE statement is used to delete the data inside a table, but not the table itself.*/
+Truncate table temporarydatabase.temproraytable;
+drop table temporarydatabase.temproraytable;
+
+/* we can see how many tables asre there in a database*/
+SHOW TABLES;
+
+
+/* WE CAN SEE THE COLUMN NAME AND ITS DATATYPE FOR DESCRIPTION USING STATEMENT*/
+/*
+===================================================================
+Describe tablename;
+===================================================================
+if use statement is not used the
+===================================================================
+Describe databasename.tablename;
+===================================================================
+*/
+DESCRIBE STUDENTS;
+DESC students;-- But donot use this
+DESCRIBE temporarydatabase.student;
+
+
+
+
+
+/* ALTER TABLE statement is used to add, delete, or modify columns in an existing table.
+-- ALTER TABLE statement is also used to add and drop various constraints on an existing table.
+*/
+/* ADD column statement in already created table
+Alter table tablename
+add columnname datatype;
+*/
+
+Alter table students
+add Email int,
+add city varchar(255);
+
+desc students;
+
+/* DROP COLUMN 
+ALTER TABLE table_name
+DROP COLUMN column_name;
+*/
+ALTER TABLE students
+DROP COLUMN email,
+Drop column city;
+
+desc students;
+
+/*modify column
+ALTER TABLE table_name
+MODIFY COLUMN column_name datatype;
+*/
+Alter table students
+modify column Email varchar(255);
+
+desc students;

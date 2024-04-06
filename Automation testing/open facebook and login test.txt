@@ -1,0 +1,22 @@
+package automaation;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class facebook {
+ public static void main(String [] args)throws InterruptedException{
+	 System.setProperty("Webdriver.chrome.driver","c:\\Selenium\\chromedriver.exe");
+WebDriver driver =new ChromeDriver();
+driver.manage().window().maximize();
+driver.get("https://facebook.com");
+
+WebElement txtbox_username,txtbox_password,loginButton;
+
+//finding text box username using id locator
+txtbox_username = driver.findElement(By.id("email"));
+txtbox_username.sendKeys("9802006723");
+txtbox_password = driver.findElement(By.id("pass"));
+txtbox_password.sendKeys("Sandip@123");
+loginButton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/div[1]/div/div/div/div[2]/div/div[1]/form/div[2]/button"));
+loginButton.click();
+ }	
+}
+

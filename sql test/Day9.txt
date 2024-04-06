@@ -1,0 +1,122 @@
+/*
+The GROUP BY statement is often used with aggregate functions (COUNT(), MAX(), MIN(), SUM(), AVG()) to group
+the result-set by one or more columns.
+=========================Group By syntaxt===============================
+SELECT column_name with aggregate function, Column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+ORDER BY column_name(s);
+========================================================================
+*/
+select count(id) as number,dob
+from temp2
+where DOB > 1996
+group by dob
+order by number;
+
+select count(sno) as snd, province
+from a
+group by province
+order by snd;
+
+
+select count(id) as number,dob
+from temp2
+-- where DOB > 1996
+group by lastname;
+
+select * from a;
+select sno,province from a;
+
+/*
+The HAVING clause was added to SQL because the WHERE keyword cannot be used with aggregate functions.
+Without group by statement we cannot use having
+======================================Having syntax================================
+SELECT column_name with aggregate function, Column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+HAVING condition
+ORDER BY column_name(s);
+======================================================================================
+*/
+select count(sno), province
+from a
+-- where province = 'Bagmati'
+group by province
+having count(sno)>1;
+
+
+select count(id) as number,dob
+from temp2
+-- where DOB> 1994
+group by dob
+having count(id)>=2
+order by number;
+
+/*
+ SELECT INTO statement copies data from one table into a new table.
+ ===========================SQL Syntax=======================
+SELECT *
+INTO newtable [IN externaldb]
+FROM oldtable
+WHERE condition;
+============================================================
+=========================MY SQL Syntax======================
+CREATE TABLE new_tbl 
+SELECT * FROM orig_tbl
+Where condition;
+================================================================
+*/
+CREATE TABLE c
+SELECT * FROM a
+where province = "Bagmati";
+
+describe c;
+
+select * from c;
+
+drop table if exists c;
+
+/*
+->The INSERT INTO SELECT statement copies data from one table and inserts it into another table.
+->The INSERT INTO SELECT statement requires that the data types in source and target tables match.
+<+>Note: The existing records in the target table are unaffected.
+===================Insert Into select-=======================
+INSERT INTO table2
+SELECT * FROM table1
+WHERE condition;
+==============================================================
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Copy only some columns from one table into another table:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INSERT INTO table2 (column1, column2, column3, ...)
+SELECT column1, column2, column3, ...
+FROM table1
+WHERE condition;
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+create table caution(
+id int,
+Mainname varchar(255),
+Address varchar(255)
+);
+
+select * from caution;
+
+truncate caution;
+
+Insert into caution
+select * from a;
+
+
+truncate caution;
+
+Insert into caution(Mainname,Address)
+select Name,Province from a
+where province = 'Bagmati';
+
+select * from caution;
+
+

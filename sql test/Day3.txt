@@ -1,0 +1,203 @@
+/* PRIMARY KEY constraint uniquely identifies each record in a table.
+->Primary keys must contain UNIQUE values, and cannot contain NULL values.
+->A table can have only ONE primary key; and in the table, 
+this primary key can consist of single or multiple columns (fields).
+.
+
+Create table tablename(
+columnname1 datatype Primary key,
+columnname datatype);
+--------------------------------------------------------------------------------------------------
+Create table tablename(
+columnname1 datatype,
+columnname datatype,
+primary key(columnname1)
+);
+*/
+CREATE TABLE Persons2 (
+    ID int,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Age int,
+    PRIMARY KEY (ID)
+);
+DESC PERSONS2;
+
+alter table persons2
+drop primary key;
+-- -- ----------------------------------------------------------------------
+CREATE TABLE Persons3 (
+    ID int PRIMARY KEY,
+    LastName varchar(255)Not Null Unique,
+    FirstName varchar(255) Not Null Unique,
+    Age int
+);
+
+DESC PERSONS3;
+
+insert into persons3(id,lastname,firstname,age)
+values
+(1,'Shrestha',"Albish",26);
+
+
+-- Multiple column primary key --
+CREATE TABLE school(
+class int,
+rollnumber int,
+name varchar(255),
+primary key (class,rollnumber)
+);
+
+describe school;
+
+insert into school
+values(1,2,'Sweta');
+
+
+select * from school;
+
+/* 
+
+
+->FOREIGN KEY constraint is used to prevent actions that would destroy links between tables.
+->A FOREIGN KEY is a field (or collection of fields) in one table, 
+that refers to the PRIMARY KEY in another table.
+->FOREIGN KEY constraint prevents invalid data from being inserted into 
+the foreign key column, 
+because it has to be one of the values contained in the parent table
+
+Create table tablename1(
+column1 datatype,
+columnnamen datatype,
+primary key(column1)
+foreign key(columnnamen) references tablename(primarykey column of the reference table)
+);
+*/
+drop table persons2;
+
+CREATE TABLE Orders1(
+    OrderID int,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    foreign key(personId) references persons2(id)
+);
+
+CREATE TABLE Orders(
+    OrderID int,
+    OrderNumber int NOT NULL,
+    PersonID int ,
+    PRIMARY KEY (OrderID)
+);
+
+
+
+SHOW CREATE TABLE orders1;
+drop table orders1;
+
+alter table Orders1
+drop foreign key PersonID;
+
+CREATE TABLE `orders1` (`OrderID` int NOT NULL,
+`OrderNumber` int NOT NULL,
+`PersonID` int DEFAULT NULL,
+PRIMARY KEY (`OrderID`),
+KEY `PersonID` (`PersonID`),
+CONSTRAINT `orders1_ibfk_1`
+FOREIGN KEY (`PersonID`) REFERENCES `persons2` (`ID`)) 
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+describe orders1;
+ALTER TABLE Orders1 DROP FOREIGN KEY orders1_ibfk_1;
+
+alter table orders1
+drop index PersonID;
+
+describe orders;
+
+Alter table Orders
+add FOREIGN KEY (PersonID) REFERENCES Persons3(ID);
+
+describe orders;	
+
+drop table persons3;
+
+select * from persons3;
+
+
+insert into orders
+values(4,400,8);
+
+select * from orders1;
+
+
+/*
+-> CHECK constraint is used to limit the value range that 
+can be placed in a column.
+->CHECK constraint on a column it will allow only certain values for this column.
+
+Create table tablename(
+columnname1 datatype,
+columnname datatype,
+check(columname condition value));
+*/
+CREATE TABLE Persons4 (
+    ID int NOT NULL,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Age int,
+    CHECK (Age>=18)
+);
+
+describe persons4;
+
+show create table persons4;
+
+insert into persons4
+values(1,"Neupane",'Ekta',18);
+
+select * from persons4;
+
+/*DEFAULT constraint is used to set a default value for a column.
+Create table tablename(
+columnname1 datatype,
+columnname datatype default value);
+*/
+
+CREATE TABLE Persons5 (
+    ID int NOT NULL,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) Not Null DEFAULT 'Kathmandu'
+);
+
+describe persons5;
+
+CREATE TABLE Persons6 (
+    ID int NOT NULL,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) DEFAULT 'Kathmandu'
+);
+
+describe persons6;
+
+insert into persons5(id,lastname)
+values(1,'Pokhrel');
+
+select * from persons5;
+
+insert into persons5(id,lastname,city)
+values(1,'Pokhrel',null);
+
+select * from persons5;
+
+insert into persons6(id,lastname)
+values(1,'Pokhrel');
+
+insert into persons6(id,lastname,city)
+values(4,'Pokhrel',null);
+
+select * from persons6;

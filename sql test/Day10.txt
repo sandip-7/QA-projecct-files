@@ -1,0 +1,178 @@
+/*
+->The EXISTS operator is used to test for the existence of any record in a subquery.
+->The EXISTS operator returns TRUE if the subquery returns one or more records.
+================== Exists Syntax =======================
+SELECT column_name(s)
+FROM table_name
+WHERE EXISTS
+(SELECT column_name FROM table_name WHERE condition);
+========================================================
+*/
+select * from temp1;
+select * from temp2;
+
+select * from temp2 where
+exists (select * from temp1 WHERE TEMP2.LASTNAME = TEMP1.LASTNAME);
+
+select * from temp2 where
+ TEMP2.LASTNAME = TEMP1.LASTNAME;
+
+SELECT temp2.id, temp2.firstname,temp2.lastname
+FROM TEMP2,temp1 
+WHERE TEMP2.LASTNAME = TEMP1.LASTNAME;
+
+SELECT *
+FROM TEMP2,temp1 
+WHERE TEMP2.LASTNAME = TEMP1.LASTNAME;
+
+/* any
+The ANY operator:
+->returns a boolean value as a result
+->returns TRUE if ANY of the subquery values meet the condition
+>> ANY means that the condition will be true if the operation is true for any of 
+the values in the range.
+================================ ANY SYnatx ===================================================
+SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ANY
+  (SELECT column_name
+  FROM table_name
+  WHERE condition);
++++++++++++++++++++++++++++++++++++ Notes ++++++++++++++++++++++++++++++++++++++
+The operator must be a standard comparison operator (=, <>, !=, >, >=, <, or <=).
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+=================================================================================================
+*/
+select id from temp2;
+select id from temp1;
+
+select * from temp2
+where ID < any(select ID from temp1);
+
+
+
+/*
+The ALL operator:
+>>returns a boolean value as a result
+>>returns TRUE if ALL of the subquery values meet the condition
+>>is used with SELECT, WHERE and HAVING statements
+>>>>>>ALL means that the condition will be true only if the operation is true 
+for all values in the range. 
+
+============================= ALL Syntax =====================================
+SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ALL
+  (SELECT column_name
+  FROM table_name
+  WHERE condition);
++++++++++++++++++++++++++++++++++++ Notes ++++++++++++++++++++++++++++++++++++++
+The operator must be a standard comparison operator (=, <>, !=, >, >=, <, or <=).
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+================================================================================
+*/
+select * 
+from temp2
+where ID > ALL(select ID from temp1);
+
+select id  from temp2;
+
+/*
+The CASE statement goes through conditions and returns a value when 
+the first condition is met (like an if-then-else statement).
+ So, once a condition is true, it will stop reading and return the result. 
+ If no conditions are true, it returns the value in the ELSE clause.
+
+If there is no ELSE part and no conditions are true, it returns NULL.
+============================ Syntax ===============================
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    WHEN conditionN THEN resultN
+    ELSE result
+END AS forprint_column;
+==========================================================
+*/
+select lastname, firstname,dob,
+case
+when dob<=1994 then 'Person is old'
+when dob>=2000 then 'Person is a child'
+else 'Person is young'
+end as Sentence
+from temp2;
+
+/*
+if null sets a default value to the column which has null values
+*/
+select * from temp4 where FirstName is null;
+select id,lastname , ifnull(firstname,'Keshav' ) as firstname
+from temp4
+where firstname is null;
+
+
+/*Store Procedeure
+-> A stored procedure is a prepared SQL code that you can save,
+ so the code can be reused over and over again.
+ ->So if you have an SQL query that you write over and over again,
+ save it as a stored procedure, and then just call it to execute it.
+ -> You can also pass parameters to a stored procedure, so that the stored 
+ procedure can act based on the parameter value(s) that is passed.
+ ====================== MYSQL Syntax ==============================
+DELIMITER &&
+CREATE PROCEDURE Procedure_Name()
+BEGIN  
+SQL Statement;   
+END&&
+++++++++ Creates a procedure and saves it ++++++++++++++++++++++++++
+++++++++ To execute store procedure syntax +++++++++++++++++++++++++
+CALL PROCEDURE_NAME();
+====================================================================
+*/
+DELIMITER &&
+CREATE PROCEDURE get_temp2()
+BEGIN  
+    SELECT * FROM temp2;
+END&&
+
+call get_temp2();
+
+/* with variables and parameters
+============================= MYSQL Syntax ======================
+CREATE PROCEDURE procedure_name(In variablename1 datatype, In variablename2 datatype,...., In variablenamen datatype)
+BEGIN  
+    SQL statement with variables;
+END&&
+++++++++++++++ Call Statement ++++++++++++++++++
+call procedure_name(value1,value2,....,valuen);
++++++++++++++++++++++++++++++++++++++++++++++++++
+====================================================
+*/
+DELIMITER &&
+CREATE PROCEDURE INSERT_PERSONS(In x varchar(30), in y varchar(30), IN z year)
+BEGIN  
+    INSERT INTO temp2(LastName,FirstName,DOB)
+	VALUES (y,x,z);
+END&&
+
+call insert_persons('Alisha','Rai',1997);
+
+
+
+
+DELIMITER &&
+CREATE PROCEDURE where_condition(In x varchar(30))
+BEGIN  
+    Select * from temp2
+    where lastname = x;
+END&&
+
+call where_condition('Shrestha');
+
+
+delimiter &&
+CREATE PROCEDURE showaccordingly(in fname varchar(255))
+Begin
+ select * from temp2 where firstname = fname;
+ end &&
+ 
+call showaccordingly("Kritibha")

@@ -1,0 +1,95 @@
+/* Not Null constraint enforces a column to NOT accept NULL values.
+create table tablename(
+columnname1 datatype constraint,
+columnname2 datatype constraint,
+columnname3 datatype constraint,
+columnname4 datatype constraint
+)
+
+Create table tablename(
+columnname1 datatype not null,
+columnname datatype);
+*/
+Create table temporrarytable
+(
+	ID int NOT NULL,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Age int
+);
+
+describe temporrarytable;
+
+insert into temporrarytable (id,LASTNAME,FIRSTNAME,age)
+VALUES
+(1,null,"Bishal",30);
+
+insert into temporrarytable (id,LASTNAME,FIRSTNAME,age)
+VALUES
+(null,"kARKI","Bishal",30);
+
+insert into temporrarytable (LASTNAME,FIRSTNAME,age)
+VALUES
+("kARKI","Bishal",30);
+
+insert into temporrarytable (id,LASTNAME,FIRSTNAME,age)
+VALUES
+(2,"kARKI","Bishal",null);
+
+select * from temporrarytable;
+
+/*altering and adding constraints */
+truncate table temporrarytable;
+
+update temporrarytable set age = 28 where id = 2;
+
+alter table temporrarytable 
+modify age int not null;
+
+describe temporrarytable;
+
+alter table temporrarytable 
+modify age int;
+
+/*UNIQUE constraint ensures that all values in a column are different.
+Create table tablename(
+columnname1 datatype Unique,
+columnname datatype);
+*/
+CREATE TABLE Persons1 (
+    ID int UNIQUE,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Age int
+);
+describe Persons1;
+
+insert into persons1 (id,LASTNAME,FIRSTNAME,age)
+VALUES
+(null,"kARKI","Bishal",30);
+
+select * from persons1;
+
+/* Alter constraints for unique*/
+Alter table persons1
+modify ID int;
+
+
+
+alter table persons1
+drop index ID;
+
+describe Persons1;
+
+create table xyz(
+id int not null unique,
+name varchar(255),
+sno int not null unique);
+
+drop table xyz;
+
+DESCRIBE XYZ;
+
+alter table xyz
+drop index id ;
+

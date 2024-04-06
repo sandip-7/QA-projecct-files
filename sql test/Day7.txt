@@ -1,0 +1,159 @@
+/*
+-->The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
+-->There are two wildcards often used in conjunction with the LIKE operator:
+	>>The percent sign (%) represents zero, one, or multiple characters
+	>>The underscore sign (_) represents one, single character
+======================= Like Syntax ============================
+SELECT column1, column2, ...
+FROM table_name
+WHERE columnN LIKE pattern;
+==================================================================
+*/
+-- Finds any values that start with "s"
+select * 
+from temp2
+where firstname like 'S%';
+
+-- Finds any values that end with "a"
+select * from temp2
+where firstname like '%a';
+
+-- Finds any values that have "sh" in any position
+select * from temp2
+where firstname like '%sh%';
+
+-- Finds any values that have "i" in the second position
+select * from temp2
+where firstname like '_i%';
+
+-- Finds any values that start with "b" and are at least 2 characters in length
+select * from temp2
+where firstname like 'B_%';
+
+-- Finds any values that start with "B" and are at least 3 characters in length
+select * from temp2
+where firstname like 'B__%';
+
+-- Finds any values that start with "S" and ends with "a"
+select * from temp2
+where firstname like 'S%a';
+
+-- Using the wild card _ only without %
+select * from temp2
+where firstname like '_____';
+
+/* Using the [charlist] Wildcard
+[bsp]% it denotes as b% or s% or p%
+---------------- SQL syntax --------------
+select columnname(s)
+from tablename
+where columname like '[bsp]%'--- columnname like b% or columnname like s% or columnname like p%
+-----------------------------------------
+================ Mysql syntax ===========
+select  columnname
+from tablename where 
+ columnname regexp '^[bsp]';
+ 
+ select columnname 
+ from table name
+ where column_name like "b%" or column_name like "s%"
+ or column_name like "p%";
+ =====================================
+ */
+ select * from temp2
+ where firstname regexp '^[bsr]'
+ order by FirstName;
+ 
+-- From a to k
+/* ---------------- SQL syntax --------------
+select columnname(s)
+from tablename
+where columname like [a-k]%
+-----------------------------------------------------------
+========================= Mysql syntax ====================
+select columnname
+from tablename
+where columnname regexp '^[a-k]'
+*/
+select * from temp2
+where firstname regexp '^[a-k]'
+order by firstname;
+
+-- how to write not
+select * from temp2
+where firstname not regexp '^[a-n]'
+order by firstname;
+
+/* 
+The SQL IN Operator
+>>The IN operator allows you to specify multiple values in a WHERE clause.
+>>The IN operator is a shorthand for multiple OR conditions.
+==================== In operator syntax ======================
+SELECT column_name(s)
+FROM table_name
+WHERE column_name IN (value1, value2, ...);
+-- where column_name = value1 or column_name = value2 or column_name = ....
+======================================================================================
+*/
+select * from temp2
+where firstname in ('Rojina','Jenu','Ashok',"leela","netra");
+
+-- In operator inside select queries
+select * from temp2
+where lastname in (select lastname from temp1);
+/*
+select * from temp2
+where lastname in ('shrestha','Karki','shah')
+*/
+ 
+/*
+The SQL BETWEEN Operator
+>>The BETWEEN operator selects values within a given range. The values can be numbers, text, or dates.
+>>The BETWEEN operator is inclusive: begin and end values are included.
+===================Syntax==========================
+SELECT column_name(s)
+FROM table_name
+WHERE column_name BETWEEN value1 AND value2;
+===================================================
+*/
+-- using number
+SELECT *
+FROM temp2
+WHERE id between 5 and 12 ; 
+
+-- using text 
+select * from temp2
+where firstname between 'Bishal' and 'Sabhyata'
+order by firstname;
+
+select * from temp2
+-- where FirstName between '
+order by Firstname;
+
+/*
+-->SQL aliases are used to give a table, or a column in a table, a temporary name.
+>>Aliases are often used to make column names more readable.
+>>An alias only exists for the duration of that query.
+>>An alias is created with the AS keyword.
+==============Alias Column Syntax================
+SELECT column_name AS alias_name
+FROM table_name;
+==================================================\
+*/
+select firstname as 'First_Name'
+from temp2;
+-- when we have to join two cloumns and name them we use concat
+select Concat(firstname ,' ',lastname)   as "Full name" 
+from temp2;
+
+/* 
+>>>>>>>>>>>>>>> Alias Table Syntax <<<<<<<<<<<<<<<<<<<
+SELECT column_name(s)
+FROM table_name AS alias_name;
+>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+select tablename1.columnname, tablename2.columnname
+from tablename1, tablename2;
+*/
+select t1.firstname,t2.lastname 
+from temp2 as t1, temp1 as t2
+where t1.lastname = t2.lastname;

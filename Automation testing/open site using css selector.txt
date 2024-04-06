@@ -1,0 +1,24 @@
+package automaation;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class login {
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "C:\\Selenium\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://demoblaze.com/");
+		
+		WebElement nav_login, txt_username, txt_password, loginButton;
+		nav_login = driver.findElement(By.cssSelector("#login2"));
+		nav_login.click();
+		Thread.sleep(5000);
+		txt_username = driver.findElement(By.cssSelector("#loginusername"));
+		txt_username.sendKeys("testmorning");
+		txt_password = driver.findElement(By.cssSelector("#loginpassword"));
+		txt_password.sendKeys("test123");
+		loginButton = driver.findElement(By.cssSelector("#logInModal > div > div > div.modal-footer > button.btn.btn-primary"));
+		loginButton.click();	
+	}
+}

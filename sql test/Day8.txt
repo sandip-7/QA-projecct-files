@@ -1,0 +1,165 @@
+create table a
+( 
+Sno int primary key auto_increment,
+Name varchar(255), 
+Province varchar(255)
+);
+
+create table b
+(
+id int primary key auto_increment,
+Address varchar(255),
+Sno_a int
+);
+
+
+ insert into a(Name,Province)
+ values
+ ('Anit','Bagmati'),
+ ('Anjila','Gandaki'),
+ ('Bijaya','Koshi'),
+ ('Prem','Bagmati'),
+ ('Swikriti','Madhesh'),
+ ('Suraj','Lumbini');
+ 
+ select * from a;
+select * from b;
+
+drop table if exists b;
+
+set global local_infile =1;
+show global variables like 'local_infile';
+
+Load data Local infile 'D:\SQL CLASS Tutorial\sad.csv'
+into table b
+Fields Terminated by ','
+enclosed by '"'
+lines terminated by '\n'
+ignore 1 rows;
+
+
+/* Join
+select (tablename or tablealiases).column_names
+from table1 -- (left side table)
+type of join table2 --(right side table)
+on table1.column_something = table2.column_something; 
+
+ Inner Join
+->INNER JOIN keyword selects records that have matching values in both tables.
+============================Syntax==============================
+SELECT column_name(s)
+FROM table1
+INNER JOIN table2
+ON table1.column_name = table2.column_name;
+====================================================================
+*/
+select * from a;
+select * from b;
+
+
+select a.sno, a.Name, b.address
+from a
+inner join b
+on a.sno = b.sno_a;
+
+/* Left Join
+->LEFT JOIN keyword returns all records from the left table (table1), 
+and the matching records from the right table (table2). 
+The result is 0 records from the right side, if there is no match.
+================================Syntax===========================
+SELECT column_name(s)
+FROM table1
+LEFT JOIN table2
+ON table1.column_name = table2.column_name;
+=====================================================================
+*/
+select A.sno, A.Name, B.address
+from a
+left join b
+on a.sno = b.sno_a;
+
+
+select A.sno, A.Name, B.address
+from b
+left join a
+on a.sno = b.sno_a;
+
+/*Right Join
+->RIGHT JOIN keyword returns all records from the right table (table2),
+and the matching records from the left table (table1).
+->The result is 0 records from the left side, if there is no match.
+================================Syntax===========================
+SELECT column_name(s)
+FROM table1
+RIGHT JOIN table2
+ON table1.column_name = table2.column_name;
+=====================================================================
+*/
+select A.sno, A.Name, B.address
+from a
+right join b
+on a.sno = b.sno_a;
+
+select A.sno, A.Name, B.address
+from b
+right join a
+on a.sno = b.sno_a;
+
+/* Self Join
+A self join is a regular join, but the table is joined with itself.
+==================Syntaxt=================================
+SELECT column_name(s)
+FROM table1 as T1, table1 as T2
+WHERE condition;
+===================================================
+*/
+select a.sno,a.name,b.address
+from a,b
+where a.sno = b.sno_a;
+
+select a1.name as Aname,b1.name as Bname,a1.province as pradesh
+from A as a1, A as b1
+where a1.sno<>b1.sno and
+a1.province = b1.province;
+
+/*
+->UNION operator is used to combine the result-set of two or more SELECT statements.
+>>Every SELECT statement within UNION must have the same number of columns
+>>The columns must also have similar data types
+>>The columns in every SELECT statement must also be in the same order
+=============================SYNTAX===================================
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+=======================================================================
+*/
+select sno from a
+union
+select sno_a from b;
+/*
+-- UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL
+-- ===============Syntax===========================
+--   SELECT column_name(s) FROM table1
+--	 Union ALL
+--   SELECT column_name(s) FROM table2;
+-- =====================================================
+*/
+select sno from a
+union all
+select sno_a from b
+order by sno;
+
+
+
+select A.sno, A.Name, B.address
+from a
+left join b
+on a.sno = b.sno_a
+Union
+select A.sno, A.Name, B.address
+from a
+right join b
+on a.sno = b.sno_a;
+
+
+Load data Local infile 'D:\SQL CLASS Tutorial\sad.csv' into table b Fields Terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 rows

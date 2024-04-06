@@ -1,0 +1,180 @@
+/*
+->Auto-increment allows a unique number to be generated
+ automatically when a new record is inserted into a table.
+->Often this is the primary key field that we would like to be created 
+automatically every time a new record is inserted.
+Create table tablename(
+columnname1 datatype auto_increment Primary key,
+columnname datatype);
+*/
+CREATE TABLE Persons7(
+    Personid int AUTO_INCREMENT,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Age int,
+    PRIMARY KEY (Personid)
+);
+
+describe persons7;
+
+Insert into persons7(Lastname,FirstName,Age)
+Values
+('Prajapati','Astha',22);
+
+select * from persons7;
+
+Insert into persons7(Personid,Lastname,FirstName,Age)
+Values
+(3,'Shrestha','Emerald',23);
+
+select * from persons7;
+/* after manually adding value in the auto increment column it starts with maximum value of the
+particular column when auto increment starts*/
+
+Insert into persons7(Lastname,FirstName)
+Values
+('Pokrel','Kritibha');
+drop table persons7;
+
+/* Date stores date and time format
+Multiple formats
+create table tablename(
+column1 datatype(date,timestamp,year) constraint,
+column2 datatype constraints);
+*/
+create table persons9(
+id int auto_increment primary key,
+LastName varchar(255),
+FirstName varchar(255),
+DOB timestamp
+);
+describe persons9;
+/*
+insert into tablename(lastname,firstname,dob)
+values
+('Shrestha','Aakash','YYYY-MM-DD HH:MM:SS');
+
+*/
+insert into persons9(lastname,firstname,dob)
+values
+('Ghimire','Salna','2022-12-31 09:00:00');
+
+select * from persons9;
+
+create table persons10(
+id int auto_increment primary key,
+LastName varchar(255),
+FirstName varchar(255),
+DOB datetime
+);
+insert into persons10(lastname,firstname,dob)
+values
+('Shrestha','Aakash','2022-12-31 01:10:00');
+
+describe persons9;
+describe persons10;
+
+insert into persons10(lastname,firstname,dob)
+values
+('Shrestha','Aakash','2022-12-31');
+
+select * from persons10;
+
+
+create table temp1(
+id int auto_increment primary key,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+DOB date
+);
+
+insert into temp1(lastname,firstname,dob)
+values
+('Shrestha','Sobina','2022-11-10 09:00:00'),
+("Shah",'Asmit','2022-12-12');
+
+select * from temp1;
+
+describe temp1;
+
+create table temp2(
+id int auto_increment primary key,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+DOB year
+);
+
+create table temp4(
+id int auto_increment primary key,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+DOB year
+);
+insert into temp4(lastname,dob)
+values
+('shrestha',2020),
+('thapa',1993),
+('shah','2016'),
+('karki','2016'),
+('Lopchan','2016');
+
+select * from temp4;
+
+
+insert into temp4(lastname,dob)
+values
+('Acharya',1980),
+('Basnet',"0050");
+
+select * from temp4;
+
+
+/* Insert into
+Specify both the column names and the values to be inserted
+Synatx
+INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...);
+
+ If you are adding values for all the columns of the table,
+ you do not need to specify the column names in the SQL query. However, make sure the order of the
+ values is in the same order as the columns in the table. Here, the INSERT INTO syntax would be as follows:
+INSERT INTO table_name
+VALUES (value1, value2, value3, ...);
+*/
+-- Specify both the column names and the values to be inserted
+insert into temp2(firstname,lastname,dob)
+values
+('Saradhaa','Shrestha',1999),
+('Neal','Shah',1987),
+('Asmit','Bhattrai',1985),
+('Chulbul','Pandey',1994),
+('Sanjeev','Budhathoki',1990),
+('Bishal','Karki',1993),
+('Srijana','Thapa',1993),
+('Ashok','Chandhyo',1999),
+('Amrita','Parajuli',1993),
+('Binu','Niraula',1993),
+('Rojina','Shah',1996),
+('Arjun','Barakoti',1985),
+('Shristi','Lama',1994),
+('Sudha','Shrestha',2000),
+('Kritibha','Pokhrel',1998);
+
+select * from temp2;
+
+TRUNCATE TABLE TEMP4;
+-- adding all values without specifying column name
+describe temp4;
+
+insert into temp4
+values
+(1,'Thada','Anish',1993),
+(3,'Khadka',NULL,1995),
+(5,'Kadayat','Chhaya',1994),
+(8,'Subedi','Bikal',1992),
+(9,'Guddiya','Prabha',1997);
+
+describe temp4;
+
+select * from temp2;
+select * from temp4;

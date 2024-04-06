@@ -1,0 +1,172 @@
+/*
+-> UPDATE statement is used to modify the existing records in a table
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+*/
+Select * from temp1;
+
+Update temp1
+set lastname = 'Karki', firstname = 'Kabita'
+where id = 1;
+
+select * from temp1;
+/*Note: Be careful when updating records in a table! Notice the WHERE clause in the UPDATE statement.
+The WHERE clause specifies which record(s) that should be updated.
+If you omit the WHERE clause, all records in the table will be updated. */
+-- Excluding where clause
+update temp4
+set Firstname = 'Komolika', dob ='1993';
+
+
+update temp4
+set id =2
+where id =3;
+
+select * from temp4;
+/*
+-> DELETE statement is used to delete existing records in a table.
+DELETE FROM table_name WHERE condition;
+--->
+ Be careful when deleting records in a table! Notice the WHERE clause in the DELETE statement. 
+ The WHERE clause specifies which record(s) should be deleted. 
+ If you omit the WHERE clause, all records in the table will be deleted!
+ <--
+ */
+ select * from temp1;
+ delete from temp1 where id =2;
+ 
+ -- omitting where condition --
+ select * from temp4;
+ 
+ delete from temp4;
+ 
+describe temp4;
+
+ truncate temp4;
+
+ 
+ /*
+ -> SELECT statement is used to select data from a database and give us the data in result grid or table
+ -> The data returned is stored in a result table, called the result-set.
+ === It gives the result of selected columns only ===
+	SELECT column1, column2, ...
+	FROM table_name;
+ 
+ == To see the whole records in the table ==\
+		select * from table_name;
+        
+*/
+-- == Selected column only == --
+select firstname, lastname
+from temp2;
+-- == Whole column from a table == --
+select * from temp2 order by lastname;
+
+insert into temp2(firstname,lastname,dob)
+values
+('Netra','Ramtel',1998),
+('Jenu','Oli',2001),
+('Nisha', 'Bhatta',1999),
+('Leela','Pandey',1999),
+('Rajan','Sapkota',1992),
+('Suhana','Shrestha',2005),
+('Sarmila','Sunar',1996);
+
+
+
+/*
+--> SELECT DISTINCT statement is used to return only distinct (different) values.
+SELECT DISTINCT column1, column2, ...
+FROM table_name;
+*/
+-- == SIngle column distinct == --
+
+select dob from temp2 order by DOB;
+
+select  distinct DOB from temp2 order by dob;
+
+
+
+-- == Multiple Column distinct == --
+
+select lastname from temp2 order by lastname;
+
+select distinct lastname
+from temp2
+order by lastname;
+
+select distinct firstname
+from temp2;
+
+
+select  distinct lastname, DOB
+from temp2
+order by lastname;
+
+-- == Total Number of distinct records is used by using count statement == --
+select  count(distinct dob) from temp2;
+
+/*
+--> WHERE clause is used to filter records.
+--> It is used to extract only those records that fulfill a specified condition
+== Syntax ==
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+== WHERE clause is not only used in SELECT statements, it is also used in UPDATE, DELETE, etc.! ==
+*/
+select * from temp2 where dob = 1996;
+
+select * from temp2 where lastname = "Shrestha";
+
+/* 
+--> WHERE clause can be combined with AND, OR, and NOT operators.
+--> The AND and OR operators are used to filter records based on more than one condition:
+==>>The AND operator displays a record if all the conditions separated by AND are TRUE.
+==>>The OR operator displays a record if any of the conditions separated by OR is TRUE.
+*/
+/*
+==  AND Syntax ==
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition1 AND condition2 AND condition3 ...;
+== And condition cannot be used in same column, it has to be used for different column as a condition
+*/
+select * from temp2 where lastname = 'Shrestha' AND DOB = 1999;
+
+/* 
+== Or synatx ==
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition1 OR condition2 OR condition3 ...;
+== Or syntaxt can be used for a same column
+*/
+select * from temp2 where lastname = 'Shrestha' or DOB = 1996;
+
+select lastname,firstname from temp2 where lastname = 'Shrestha'
+ or lastname = 'Shah' or FirstName = 'Srijana';
+
+/* 
+== Not Synatx ==
+SELECT column1, column2, ...
+FROM table_name
+WHERE NOT condition;
+== It works like not euals to
+*/
+select * from temp2 where  not lastname=  "Shrestha";
+
+/*Combining and or with an example*/
+select * from temp2
+where DOB = 1993 and (lastname = 'Karki' or lastname ='Shah');
+
+/*
+select * from temp2
+where (DOB =1993 and lastname = 'Karki') or (Dob = 1993 and lastname = 'Shah')
+*/
+
+-- WHEN WE USE NOT OPERATOR WE CAN USE SAME COLUMN CAUSE IT WILL WORK LIKE OR OPERATOR
+SELECT * FROM TEMP2	where not lastname = 'Karki' and not lastname = 'Shrestha';
+SELECT * FROM TEMP2	where  lastname <> 'Shrestha' and  lastname != 'Karki';
+
+
